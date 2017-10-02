@@ -24,7 +24,7 @@ import { IInstantiationService } from 'vs/platform/instantiation/common/instanti
 import { IWorkspaceContextService } from 'vs/platform/workspace/common/workspace';
 import { EditorInput, toResource, IEditorGroup, IEditorStacksModel } from 'vs/workbench/common/editor';
 import { stripWildcards, fuzzyContains } from 'vs/base/common/strings';
-import { scoreResource } from 'vs/base/common/scorer';
+import { compareResourcesByScore } from 'vs/base/common/scorer';
 
 export class EditorPickerEntry extends QuickOpenEntryGroup {
 	private stacks: IEditorStacksModel;
@@ -137,7 +137,7 @@ export abstract class BaseEditorPicker extends QuickOpenHandler {
 					return stacks.positionOfGroup(e1.group) - stacks.positionOfGroup(e2.group);
 				}
 
-				return scoreResource(e1, e2, ResourceAccessor, searchValue, normalizedSearchValueLowercase, this.scorerCache);
+				return compareResourcesByScore(e1, e2, ResourceAccessor, searchValue, normalizedSearchValueLowercase, this.scorerCache);
 			});
 		}
 

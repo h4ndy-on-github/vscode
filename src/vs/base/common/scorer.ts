@@ -160,7 +160,7 @@ export interface IScorableResourceAccessor<T> {
 	getResourcePath(t: T): string;
 }
 
-export function scoreResource<T>(resourceA: T, resourceB: T, accessor: IScorableResourceAccessor<T>, lookFor: string, lookForNormalizedLower: string, scorerCache?: { [key: string]: number }): number {
+export function compareResourcesByScore<T>(resourceA: T, resourceB: T, accessor: IScorableResourceAccessor<T>, lookFor: string, lookForNormalizedLower: string, scorerCache?: { [key: string]: number }): number {
 	const resourceLabelA = accessor.getResourceLabel(resourceA);
 	const resourceLabelB = accessor.getResourceLabel(resourceB);
 

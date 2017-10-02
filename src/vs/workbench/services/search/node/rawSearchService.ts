@@ -23,7 +23,7 @@ import { TextSearchWorkerProvider } from 'vs/workbench/services/search/node/text
 import { IRawSearchService, IRawSearch, IRawFileMatch, ISerializedFileMatch, ISerializedSearchProgressItem, ISerializedSearchComplete, ISearchEngine, IFileSearchProgressItem, ITelemetryEvent } from './search';
 import { ICachedSearchStats, IProgress } from 'vs/platform/search/common/search';
 import { fuzzyContains } from 'vs/base/common/strings';
-import { scoreResource } from 'vs/base/common/scorer';
+import { compareResourcesByScore } from 'vs/base/common/scorer';
 
 export class SearchService implements IRawSearchService {
 
@@ -246,7 +246,7 @@ export class SearchService implements IRawSearchService {
 	private sortResults(config: IRawSearch, results: IRawFileMatch[], scorerCache: ScorerCache): IRawFileMatch[] {
 		const filePattern = config.filePattern;
 		const normalizedSearchValue = strings.stripWildcards(filePattern).toLowerCase();
-		const compare = (elementA: IRawFileMatch, elementB: IRawFileMatch) => scoreResource(elementA, elementB, FileMatchResourceAccessor, filePattern, normalizedSearchValue, scorerCache); //
+		const compare = (elementA: IRawFileMatch, elementB: IRawFileMatch) => compareResourcesByScore(elementA, elementB, FileMatchResourceAccessor, filePattern, normalizedSearchValue, scorerCache); //
 		return arrays.top(results, compare, config.maxResults);
 	}
 
